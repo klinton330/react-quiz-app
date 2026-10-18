@@ -1,0 +1,20 @@
+[
+    {
+        "id":1,
+        "question": "What is the capital of France?",
+        "options": ["Berlin","Madrid","Paris","Rome"],
+        "correctOptions":"Paris"
+    },
+     {
+        "id": 2,
+        "question": "What is the capital of Japan?",
+        "options": ["Beijing", "Tokyo", "Seoul", "Bangkok"],
+        "correctOptions": "Tokyo"
+    },
+    {
+        "id": 3,
+        "question": "Which planet is known as the Red Planet?",
+        "options": ["Earth", "Venus", "Mars", "Jupiter"],
+        "correctOptions": "Mars"
+    }
+]
