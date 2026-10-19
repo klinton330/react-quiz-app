@@ -10,6 +10,7 @@ function App() {
   const [score, setScore]=useState(0);
   const [showScore,setShowScore]=useState(false)
   const [timer,setTimer]=useState(10)
+  const [startExam,setStartExam]=useState(true)
 
   const handleRestartQuiz=()=>{
     setCurrentQuestion(0)
@@ -43,6 +44,11 @@ function App() {
   return () => clearInterval(interval);
 }, [timer, showScore, currentQuestion, questionData.length]);
 
+ const handleStartExam = ()=>{
+  console.log("Exam started")
+  setStartExam(false)
+ }
+
   const handleAnswerClick= (selectedOption)=>{
     if(selectedOption===questionData[currentQuestion].correctOptions){
       setScore((prevScore)=>prevScore+1)
@@ -57,33 +63,97 @@ function App() {
   }
   return (
     <>
-      <div className="quiz-app">
-        <h1>Velachi Quiz Competition</h1>
-        {showScore? (
-        <div className="score-section">
-           <h3>Test has been Completed!!</h3>
-          <h2>Your Score {score}/{questionData.length}</h2> 
-          <button onClick={handleRestartQuiz}>Restart</button>
-        </div>): (
-        <div className="question-section">
-          <h2>Question {currentQuestion+1}</h2>
-          <p>{questionData[currentQuestion].question}</p>
-          <div className="options">
-            {questionData[currentQuestion].options.map((option,index)=>(
-              <button key={index} onClick={()=>handleAnswerClick(option)}>{option}</button>
-            ))}
-          </div>
-          <div className="timer">
-            Time Left: <span>{timer}s</span> 
-          </div>
-        </div>
+      
+<div className="quiz-app">
+  <h1>Velachi Quiz Competition</h1>
+
+  {startExam ? (
+   
+<div class="instructions-container">
+  <h2>📋 Exam Instructions</h2>
+  <p class="subtitle">Please read the instructions carefully before starting.</p>
+
+  <div class="instruction-item">
+    <span class="number">01</span>
+    <div class="instruction-text">
+      <h3>Total Questions</h3>
+      <p>The exam consists of <strong>{questionData.length} questions</strong>.</p>
+    </div>
+  </div>
+
+  <div class="instruction-item">
+    <span class="number">02</span>
+    <div class="instruction-text">
+      <h3>Answer All Questions</h3>
+      <p>You must attempt all {questionData.length} questions to complete the exam.</p>
+    </div>
+  </div>
+
+  <div class="instruction-item">
+    <span class="number">03</span>
+    <div class="instruction-text">
+      <h3>Time Limit</h3>
+      <p>You have <strong>10 seconds per question</strong>.</p>
+    </div>
+  </div>
+
+  <div class="instruction-item">
+    <span class="number">04</span>
+    <div class="instruction-text">
+      <h3>Passing Score</h3>
+      <p>You need at least <strong>60%</strong> to pass the exam.</p>
+    </div>
+  </div>
+
+  <div class="instruction-item">
+    <span class="number">05</span>
+    <div class="instruction-text">
+      <h3>Restart Option</h3>
+      <p>You can restart the exam and try again after completing it.</p>
+    </div>
+  </div>
+
+  <button class="start-btn" onClick={handleStartExam}>Start the Exam</button>
+</div>
+
+  ) : showScore ? (
+    <div className="score-section">
+      <h3>Test has been Completed!!</h3>
+      <h2>
+        Your Score {score}/{questionData.length}
+      </h2>
+      <button onClick={handleRestartQuiz}>Restart</button>
+    </div>
+  ) : (
+    <div className="question-section">
+      <h2>Question {currentQuestion + 1}</h2>
+
+      <p>{questionData[currentQuestion].question}</p>
+
+      <div className="options">
+        {questionData[currentQuestion].options.map(
+          (option, index) => (
+            <button
+              key={index}
+              onClick={() => handleAnswerClick(option)}
+            >
+              {option}
+            </button>
+          )
         )}
-         <p className="copyright">
-        Designed and Developed by <span>Velachi</span>
-      </p>
       </div>
-        
-    </>
+
+      <div className="timer">
+        Time Left: <span>{timer}s</span>
+      </div>
+    </div>
+  )}
+
+  <p className="copyright">
+    Designed and Developed by <span>Velachi</span>
+  </p>
+</div>
+</>
   )
 }
 
