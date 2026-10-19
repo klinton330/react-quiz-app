@@ -11,6 +11,7 @@ function App() {
   const [showScore,setShowScore]=useState(false)
   const [timer,setTimer]=useState(10)
   const [startExam,setStartExam]=useState(true)
+  const [answerSubmitted, setAnswerSubmitted] = useState(false);
 
   const handleRestartQuiz=()=>{
     setCurrentQuestion(0)
@@ -49,18 +50,30 @@ function App() {
   setStartExam(false)
  }
 
-  const handleAnswerClick= (selectedOption)=>{
-    if(selectedOption===questionData[currentQuestion].correctOptions){
-      setScore((prevScore)=>prevScore+1)
-    }
-    if(currentQuestion<questionData.length-1){
-      setCurrentQuestion((currentQuestion)=>(currentQuestion+1))
-      setTimer(10)
-    }
-    else{
-      setShowScore(true)
-    }
+
+const handleAnswerClick = (selectedOption) => {
+  // Prevent multiple clicks for the same question
+  if (answerSubmitted || showScore) return;
+
+  setAnswerSubmitted(true);
+
+  const isCorrect =
+    selectedOption === questionData[currentQuestion].correctOptions;
+
+  if (isCorrect) {
+    setScore((prevScore) => prevScore + 1);
   }
+
+  if (currentQuestion < questionData.length - 1) {
+    setCurrentQuestion((prev) => prev + 1);
+    setTimer(10);
+    setAnswerSubmitted(false);
+  } else {
+    setShowScore(true);
+  }
+};
+
+
   return (
     <>
       
